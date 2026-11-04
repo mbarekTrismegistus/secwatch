@@ -13,13 +13,13 @@ L'application distingue trois rôles : **EMPLOYEE**, **TECHNICIAN** et **ADMIN**
 
 Le frontend React communique avec une API REST Spring Boot. Spring Security valide le JWT avant l'accès aux routes protégées. Les services appliquent les règles métier, puis Spring Data JPA communique avec H2 ou MySQL.
 
-![Diagramme d’architecture de SecWatch](docs/diagram-architecture.png)
+![Diagramme d’architecture de SecWatch](diagrams/diagram-architecture.png)
 
 ## Modèle de données
 
 Les entités principales sont <code>User</code>, <code>Incident</code>, <code>IncidentHistory</code> et <code>IncidentComment</code>. Un incident appartient à son créateur et peut être affecté à un technicien. Il peut aussi contenir plusieurs événements d'historique et commentaires.
 
-![Diagramme des entités de SecWatch](docs/diagram-entities.png)
+![Diagramme des entités de SecWatch](diagrams/diagram-entities.png)
 
 ## Stack technique
 
