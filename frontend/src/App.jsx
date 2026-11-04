@@ -1,0 +1,54 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import { auth } from "./services/authService";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RoleRoute from "./components/RoleRoute";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import MyIncidents from "./pages/MyIncidents";
+import NewIncident from "./pages/NewIncident";
+import IncidentDetails from "./pages/IncidentDetails";
+import AssignedIncidents from "./pages/AssignedIncidents";
+import AdminUsers from "./pages/AdminUsers";
+import AdminIncidents from "./pages/AdminIncidents";
+export default function App() {
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={auth.logged() ? <Navigate to="/" /> : <Login />}
+      />
+      <Route
+        path="/register"
+        element={auth.logged() ? <Navigate to="/" /> : <Register />}
+      />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Navbar />}>
+          <Route index element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="incidents" element={<MyIncidents />} />
+          <Route
+            path="incidents/new"
+            element={<RoleRoute roles={["EMPLOYEE"]} />}
+          >
+            <Route index element={<NewIncident />} />
+          </Route>
+          <Route path="incidents/:id" element={<IncidentDetails />} />
+          <Route path="assigned" element={<RoleRoute roles={["TECHNICIAN"]} />}>
+            <Route index element={<AssignedIncidents />} />
+          </Route>
+          <Route element={<RoleRoute roles={["ADMIN"]} />}>
+            <Route path="admin/users" element={<AdminUsers />} />
+            <Route path="admin/incidents" element={<AdminIncidents />} />
+          </Route>
+        </Route>
+      </Route>
+      <Route
+        path="*"
+        element={<Navigate to={auth.logged() ? "/" : "/login"} replace />}
+      />
+    </Routes>
+  );
+}

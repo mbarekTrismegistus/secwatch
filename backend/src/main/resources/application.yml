@@ -1,0 +1,24 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./.data/secwatch}
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+app:
+  jwt-secret: ${JWT_SECRET:local-demo-only-secwatch-signing-key-change-before-deployment-2026}
+  jwt-ttl-seconds: ${JWT_TTL_SECONDS:300}
+  cors-origin: ${CORS_ORIGIN:http://localhost:5173}
+  seed-demo: ${SEED_DEMO:true}
